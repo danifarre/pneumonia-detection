@@ -12,34 +12,35 @@ class PneumoniaDetectionChallenge:
         self.train_labels_df  = self.labels_df.sample(frac=0.75, random_state=seed)
         self.test_labels_df = self.labels_df.drop(self.train_labels_df.index)
 
-    def get_train_labels_df(self):
-        return self.labels_df
+    def get_labels_df(self):
+        return self.labels_df.copy()
 
     def get_train_labels_df(self):
-        return self.train_labels_df
+        return self.train_labels_df.copy()
 
     def get_test_labels_df(self):
-        return self.test_labels_df
+        return self.test_labels_df.copy()
 
     def load_train_data(self):
-        return self.__load_data(self.train_labels_df)
+        return self.__load_data(self.train_labels_df.copy())
 
     def load_test_data(self):
-        return self.__load_data(self.test_labels_df)
+        return self.__load_data(self.test_labels_df.copy())
 
     def __load_data(self, df):
-        df["patientId"] = df['patientId'].map(lambda _: self.path + 'stage_2_train_images/' + _ + '.dcm')
+        df["path"] = df['patientId'].map(lambda _: self.path + 'stage_2_train_images/' + _ + '.dcm')
 
-        images_paths = list(df['patientId'])
+        patients_id = list(df["patientId"])
+        images_paths = list(df['path'])
         x_train = list()
         y_train = list(df['Target'])
 
         for path in images_paths:
             img = pydicom.read_file(path).pixel_array
-            img = cv2.resize(img, (128, 128))
+            img = cv2.resize(img, (256, 256))
             x_train.append(img)
 
-        return np.array(x_train), np.array(y_train)
+        return np.array(x_train), np.array(y_train), patients_id
 
     def load_train_metadata(self):
         #f = pydicom.read_file(filePath, stop_before_pixels=True)
