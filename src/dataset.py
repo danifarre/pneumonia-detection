@@ -51,5 +51,5 @@ class PneumoniaDetectionChallenge:
 
     def __normalize(self, df):
         df = df.groupby("patientId", as_index=False).sum()
-        df['Target'] = np.where(df['Target'] > 1, 1, 0)
+        df['Target'] = np.where(df['Target'] >= 1, 1, 0)
         return df
