@@ -11,6 +11,7 @@ class PneumoniaDetectionChallenge:
         self.labels_df = self.__normalize(pd.read_csv(self.path  + 'stage_2_train_labels.csv', header=0, usecols=['patientId', 'Target']))
         self.train_labels_df  = self.labels_df.sample(frac=0.75, random_state=seed)
         self.test_labels_df = self.labels_df.drop(self.train_labels_df.index)
+        self.train_labels_df = pd.concat([self.train_labels_df[self.train_labels_df["Target"] == 1], self.train_labels_df[self.train_labels_df["Target"] == 0].sample(frac=0.35, random_state=seed)])
 
     def get_labels_df(self):
         return self.labels_df.copy()
