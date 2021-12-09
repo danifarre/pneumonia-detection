@@ -24,14 +24,14 @@ class Dataset(object):
     def get_val_df(self):
         return self.test_df.copy()
 
-    def load_train_data(self):
-        return self._load_data(self.train_df.copy())
+    def load_train_data(self, image_size):
+        return self._load_data(self.train_df.copy(), image_size)
 
-    def load_test_data(self):
-        return self._load_data(self.test_df.copy())
+    def load_test_data(self, image_size):
+        return self._load_data(self.test_df.copy(), image_size)
 
-    def load_val_data(self):
-        return self._load_data(self.val_df.copy())
+    def load_val_data(self, image_size):
+        return self._load_data(self.val_df.copy(), image_size)
 
-    def _load_data(self, df):
+    def _load_data(self, df, image_size):
         pass

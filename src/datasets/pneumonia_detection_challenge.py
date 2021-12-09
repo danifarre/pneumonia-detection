@@ -10,16 +10,18 @@ class PneumoniaDetectionChallenge(Dataset):
     def __init__(self, path):
         super().__init__(path)
 
-    def _load_data(self, df):
-        patients_id = list(df[self.image])
+    def _load_data(self, df, image_size):
         images_paths = list(df[self.path])
         x_train = list()
         y_train = list(df[self.diagnosis])
 
         for path in images_paths:
             img = pydicom.read_file(path).pixel_array
-            img = cv2.resize(img, (256, 256))
+            img = cv2.resize(img, image_size)
             x_train.append(img)
 
-        return np.array(x_train), np.array(y_train), patients_id
+        x_train = np.array(x_train)
+        x_train = np.repeat(x_train[..., np.newaxis], 3, -1)
+
+        return x_train, np.array(y_train)
 

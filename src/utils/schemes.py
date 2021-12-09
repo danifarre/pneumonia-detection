@@ -37,7 +37,7 @@ class Scheme(object):
         plt.show()
 
     @staticmethod
-    def explainer(image, model):
+    def explainer(image, model, image_size):
         explainer = lime_image.LimeImageExplainer(random_state=42)
         explanation = explainer.explain_instance(
             image,
@@ -48,7 +48,7 @@ class Scheme(object):
         plt.imshow(image)
         image, mask = explanation.get_image_and_mask(
             model.predict(
-                image.reshape((1, 256, 256, 3))
+                image.reshape((1, image_size[0], image_size[1], 3))
             ).argmax(axis=1)[0],
             positive_only=True,
             hide_rest=False)
