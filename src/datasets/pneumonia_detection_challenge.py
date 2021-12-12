@@ -11,6 +11,7 @@ class PneumoniaDetectionChallenge(Dataset):
         super().__init__(path, image_size)
 
     def _load_data(self, df):
+        images = list(df[self.image])
         images_paths = list(df[self.path])
         x_train = list()
         y_train = list(df[self.diagnosis])
@@ -23,5 +24,5 @@ class PneumoniaDetectionChallenge(Dataset):
         x_train = np.array(x_train)
         x_train = np.repeat(x_train[..., np.newaxis], 3, -1)
 
-        return x_train, np.array(y_train)
+        return x_train, np.array(y_train), images
 

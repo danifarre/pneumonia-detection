@@ -10,6 +10,7 @@ class ChestXRay(Dataset):
         super().__init__(path, image_size)
 
     def _load_data(self, df):
+        images = list(df[self.image])
         images_paths = list(df[self.path])
         x_train = list()
         y_train = list(df[self.diagnosis])
@@ -19,4 +20,4 @@ class ChestXRay(Dataset):
             img = cv2.resize(img, self.image_size)
             x_train.append(img)
 
-        return np.array(x_train), np.array(y_train)
+        return np.array(x_train), np.array(y_train), images
