@@ -8,7 +8,24 @@ from sklearn.metrics import confusion_matrix
 class Scheme(object):
 
     @staticmethod
-    def labelled_images(images, diagnosis, size=10):
+    def dataset_info(ds):
+        train = ds.get_train_df()
+        test = ds.get_test_df()
+        val = ds.get_val_df()
+        print('Train:')
+        print(' - Normal: ' + str(train[train['diagnosis'] == 1].count()['image']))
+        print(' - Pneumonia: ' + str(train[train['diagnosis'] == 0].count()['image']))
+
+        print('Test:')
+        print(' - Normal: ' + str(test[test['diagnosis'] == 1].count()['image']))
+        print(' - Pneumonia: ' + str(test[test['diagnosis'] == 0].count()['image']))
+
+        print('Val:')
+        print(' - Normal: ' + str(val[val['diagnosis'] == 1].count()['image']))
+        print(' - Pneumonia: ' + str(val[val['diagnosis'] == 0].count()['image']))
+
+    @staticmethod
+    def labeled_images(images, diagnosis, size=10):
         class_names = ['No Pneumonia', 'Pneumonia']
 
         plt.figure(figsize=(10, 10))

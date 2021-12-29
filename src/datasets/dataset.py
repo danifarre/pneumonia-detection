@@ -34,7 +34,7 @@ class Dataset(object):
         return self.test_df.copy()
 
     def get_val_df(self):
-        return self.test_df.copy()
+        return self.val_df.copy()
 
     def load_train_data(self):
         return self._load_data(self.train_df.copy())
