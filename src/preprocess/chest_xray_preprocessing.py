@@ -54,6 +54,8 @@ if __name__ == '__main__':
     cols = ['image', 'path', 'diagnosis']
 
     train_ds = charge_dataset(TRAIN_NORMAL_PATH, TRAIN_PNEUMONIA_PATH, 'train')
+    train_ds = pd.concat([train_ds[train_ds["diagnosis"] == 0],
+                          train_ds[train_ds["diagnosis"] == 1].sample(frac=0.50, random_state=SEED)])
     train_ds.to_csv(abspath(DATASET_CHEST_XRAY_PATH + '/train.csv'), index=False, columns=cols)
 
     test_ds = charge_dataset(TEST_NORMAL_PATH, TEST_PNEUMONIA_PATH, 'test')
