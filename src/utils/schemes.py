@@ -13,16 +13,16 @@ class Scheme(object):
         test = ds.get_test_df()
         val = ds.get_val_df()
         print('Train:')
-        print(' - Normal: ' + str(train[train['diagnosis'] == 1].count()['image']))
-        print(' - Pneumonia: ' + str(train[train['diagnosis'] == 0].count()['image']))
+        print(' - Normal: ' + str(train[train['diagnosis'] == 0].count()['image']))
+        print(' - Pneumonia: ' + str(train[train['diagnosis'] == 1].count()['image']))
 
         print('Test:')
-        print(' - Normal: ' + str(test[test['diagnosis'] == 1].count()['image']))
-        print(' - Pneumonia: ' + str(test[test['diagnosis'] == 0].count()['image']))
+        print(' - Normal: ' + str(test[test['diagnosis'] == 0].count()['image']))
+        print(' - Pneumonia: ' + str(test[test['diagnosis'] == 1].count()['image']))
 
         print('Val:')
-        print(' - Normal: ' + str(val[val['diagnosis'] == 1].count()['image']))
-        print(' - Pneumonia: ' + str(val[val['diagnosis'] == 0].count()['image']))
+        print(' - Normal: ' + str(val[val['diagnosis'] == 0].count()['image']))
+        print(' - Pneumonia: ' + str(val[val['diagnosis'] == 1].count()['image']))
 
     @staticmethod
     def labeled_images(images, diagnosis, size=10):
