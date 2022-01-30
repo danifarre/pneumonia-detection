@@ -1,26 +1,20 @@
 from lime import lime_image
+import numpy as np
 from skimage.segmentation import mark_boundaries
 
 
 class Image(object):
 
     @staticmethod
-    def explainer(images, model, image_size):
+    def explain(images, model, image_size):
         output = list()
 
         for image in images:
-            explainer = lime_image.LimeImageExplainer(random_state=42)
-            explanation = explainer.explain_instance(
-                image,
-                model.predict
-            )
-
-            image, mask = explanation.get_image_and_mask(
-                model.predict(
-                    image.reshape((1, image_size[0], image_size[1], 3))
-                ).argmax(axis=1)[0],
-                positive_only=True,
-                hide_rest=False)
+            explainer = lime_image.LimeImageExplainer()
+            explanation = explainer.explain_instance(image.astype('double'), model.predict, top_labels=5, hide_color=0,
+                                                     num_samples=1000)
+            image, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=5,
+                                                        hide_rest=False)
 
             output.append(mark_boundaries(image, mask))
 
