@@ -59,6 +59,8 @@ if __name__ == '__main__':
     train_ds.to_csv(abspath(DATASET_PNEUMONIA_DETECTION_CHALLENGE_PATH + '/train.csv'), index=False, columns=cols)
 
     test_ds['path'] = test_ds['image'].map(lambda _: DATASET_PNEUMONIA_DETECTION_CHALLENGE_DATA_PATH + '/test/' + _ + '.dcm')
+    test_ds = pd.concat([test_ds[test_ds["diagnosis"] == 1], test_ds[test_ds["diagnosis"] == 0].sample(frac=0.30, random_state=SEED)])
+
     test_ds.to_csv(abspath(DATASET_PNEUMONIA_DETECTION_CHALLENGE_PATH + '/test.csv'), index=False, columns=cols)
 
     val_ds['path'] = val_ds['image'].map(lambda _: DATASET_PNEUMONIA_DETECTION_CHALLENGE_DATA_PATH + '/val/' + _ + '.dcm')
